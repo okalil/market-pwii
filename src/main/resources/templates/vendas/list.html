@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vendas</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>DATA</th>
+            <th>TOTAL</th>
+        </thead>
+        <tbody>
+        <tr th:each="venda : ${vendas}">
+            <td th:text="${venda.id}"></td>
+            <td th:text="${#temporals.format(venda.data, 'dd/MM/YYY HH:mm')}"></td>
+            <td th:text="${venda.total}"></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
