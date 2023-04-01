@@ -19,6 +19,7 @@
             <td th:text="${venda.id}"></td>
             <td th:text="${#temporals.format(venda.data, 'dd/MM/YYY HH:mm')}"></td>
             <td th:text="${venda.total}"></td>
+            <td th:if="${venda.comprador != null}" th:text="${venda.comprador.nome}"></td>
         </tr>
         </tbody>
     </table>

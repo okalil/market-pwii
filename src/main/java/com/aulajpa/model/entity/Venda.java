@@ -19,9 +19,14 @@ public class Venda {
     @OneToMany(mappedBy = "venda")
     List<ItemVenda> itens;
 
+    @ManyToOne
+    Pessoa comprador;
+
     Venda() {
-      this.data = LocalDate.now();
-    };
+        this.data = LocalDate.now();
+    }
+
+    ;
 
     public double total() {
         double t = 0;
@@ -29,7 +34,9 @@ public class Venda {
             t += item.total();
         }
         return t;
-    };
+    }
+
+    ;
 
     public int getId() {
         return id;
@@ -53,5 +60,13 @@ public class Venda {
 
     public void setItens(List<ItemVenda> itens) {
         this.itens = itens;
+    }
+
+    public Pessoa getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Pessoa comprador) {
+        this.comprador = comprador;
     }
 }
