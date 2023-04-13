@@ -1,6 +1,7 @@
 package com.aulajpa.model.entity;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 @Entity
 public class ItemVenda {

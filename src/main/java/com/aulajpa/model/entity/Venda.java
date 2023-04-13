@@ -1,16 +1,22 @@
 package com.aulajpa.model.entity;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@Scope("session")
+@Component
 @Entity
 public class Venda {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(generator = "inc")
+    @GenericGenerator(name = "inc", strategy = "increment")
     private int id;
 
     @CreatedDate
@@ -24,9 +30,8 @@ public class Venda {
 
     Venda() {
         this.data = LocalDate.now();
-    }
-
-    ;
+        this.itens = new ArrayList<>();
+    };
 
     public double total() {
         double t = 0;
@@ -34,9 +39,7 @@ public class Venda {
             t += item.total();
         }
         return t;
-    }
-
-    ;
+    };
 
     public int getId() {
         return id;

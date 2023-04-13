@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carrinho</title>
+</head>
+<body>
+<h1>Carrinho</h1>
+<table>
+    <h2>Itens</h2>
+
+    <thead>
+    <th>Produto</th>
+    <th>Quantidade</th>
+    <th></th>
+    </thead>
+
+    <tbody>
+    <tr th:each="item,iteracao : ${venda.itens}">
+        <td th:text="${item.produto.descricao}"></td>
+        <td th:text="${item.qtd}"></td>
+        <td>
+            <form method="post" action="/carrinho/delete">
+                <button name="index" th:value="${iteracao.index}">Deletar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+    <form method="post" action="/carrinho">
+        <select name="id">
+            <option
+                    th:each="pessoa : ${pessoas}"
+                    th:text="${pessoa.nome}"
+                    th:value="${pessoa.id}">
+            </option>
+        </select>
+
+        <button>Finalizar</button>
+    </form>
+</table>
+</body>
