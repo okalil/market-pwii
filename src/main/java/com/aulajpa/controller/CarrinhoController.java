@@ -7,6 +7,7 @@ import com.aulajpa.model.entity.Venda;
 import com.aulajpa.model.repository.PessoaRepository;
 import com.aulajpa.model.repository.ProdutoRepository;
 import com.aulajpa.model.repository.VendaRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Scope("request")
@@ -45,10 +47,11 @@ public class CarrinhoController {
     }
 
     @PostMapping
-    public String finalizar(Long id) {
+    public String finalizar(Long id, HttpSession session) {
         Pessoa pessoa = pessoaRepository.buscarUm(id);
         venda.setComprador(pessoa);
         vendaRepository.criar(venda);
+        session.invalidate();
         return "redirect:/vendas";
     }
 

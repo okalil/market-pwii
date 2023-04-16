@@ -5,10 +5,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrinho</title>
+    <title th:text="|Pedido #${venda.id}|"></title>
 </head>
 <body>
-<h1>Carrinho</h1>
+<h1 th:text="|Pedido #${venda.id}|"></h1>
+
+<p th:text="|Cliente: ${venda.comprador.nome}|"></p>
+
+<p th:text="|Total: ${venda.total}|" ></p>
+
 <table>
     <h2>Itens</h2>
 
@@ -17,35 +22,15 @@
     <th>Quantidade</th>
     <th>Preço Unidade</th>
     <th>Total do Item</th>
-    <th></th>
     </thead>
 
     <tbody>
-    <tr th:each="item,iteracao : ${venda.itens}">
+    <tr th:each="item : ${venda.itens}">
         <td th:text="${item.produto.descricao}"></td>
         <td th:text="${item.qtd}"></td>
         <td th:text="${item.produto.valor}"></td>
         <th th:text="${item.total}"></th>
-        <td>
-            <form method="post" action="/carrinho/delete">
-                <button name="index" th:value="${iteracao.index}">Deletar</button>
-            </form>
-        </td>
     </tr>
     </tbody>
 </table>
-
-<h3 th:text="|Total: ${venda.total}|" ></h3>
-
-<form method="post" action="/carrinho">
-    <select name="id">
-        <option
-                th:each="pessoa : ${pessoas}"
-                th:text="${pessoa.nome}"
-                th:value="${pessoa.id}">
-        </option>
-    </select>
-
-    <button>Finalizar</button>
-</form>
 </body>

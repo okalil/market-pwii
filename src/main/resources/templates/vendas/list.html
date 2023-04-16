@@ -8,20 +8,26 @@
     <title>Vendas</title>
 </head>
 <body>
-    <table>
-        <thead>
-            <th>ID</th>
-            <th>DATA</th>
-            <th>TOTAL</th>
-        </thead>
-        <tbody>
-        <tr th:each="venda : ${vendas}">
-            <td th:text="${venda.id}"></td>
-            <td th:text="${#temporals.format(venda.data, 'dd/MM/YYY HH:mm')}"></td>
-            <td th:text="${venda.total}"></td>
-            <td th:if="${venda.comprador != null}" th:text="${venda.comprador.nome}"></td>
-        </tr>
-        </tbody>
-    </table>
+<table>
+    <h1>Pedidos</h1>
+
+    <thead>
+    <th>ID</th>
+    <th>DATA</th>
+    <th>TOTAL</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr th:each="venda : ${vendas}">
+        <td th:text="${venda.id}"></td>
+        <td th:text="${#temporals.format(venda.data, 'dd/MM/YYY')}"></td>
+        <td th:text="${venda.total}"></td>
+        <td th:if="${venda.comprador != null}" th:text="${venda.comprador.nome}"></td>
+        <td>
+            <a th:href="|/vendas/${venda.id}|">Ver Detalhes</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

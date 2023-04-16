@@ -26,4 +26,8 @@ public class VendaRepository {
             em.persist(itemVenda);
         }
     }
+
+    public Venda buscarUm(int vendaId) {
+        return em.find(Venda.class, vendaId);
+    }
 }

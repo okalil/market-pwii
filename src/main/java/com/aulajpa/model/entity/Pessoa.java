@@ -19,6 +19,17 @@ public abstract class Pessoa {
     @OneToMany(mappedBy = "comprador")
     List<Venda> compras;
 
+    @OneToMany(mappedBy = "pessoa")
+    List<Endereco> enderecos;
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
     public Long getId() {
         return id;
     }

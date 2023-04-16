@@ -28,7 +28,7 @@ public class Venda {
     @ManyToOne
     Pessoa comprador;
 
-    Venda() {
+    public Venda() {
         this.data = LocalDate.now();
         this.itens = new ArrayList<>();
     };

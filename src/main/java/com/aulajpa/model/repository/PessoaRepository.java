@@ -21,6 +21,7 @@ public class PessoaRepository {
 
     public void criar(PessoaJuridica pessoa) {
         em.persist(pessoa);
+        em.flush();
     }
 
     public Pessoa buscarUm(Long pessoaId) {

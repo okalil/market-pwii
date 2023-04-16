@@ -1,7 +1,9 @@
 package com.aulajpa.controller;
 
+import com.aulajpa.model.entity.Endereco;
 import com.aulajpa.model.entity.PessoaFisica;
 import com.aulajpa.model.entity.PessoaJuridica;
+import com.aulajpa.model.repository.EnderecoRepository;
 import com.aulajpa.model.repository.PessoaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PessoaController {
 
     @Autowired
-    PessoaRepository repository;
+    PessoaRepository pessoaRepository;
+
+    @Autowired
+    EnderecoRepository enderecoRepository;
 
     @GetMapping("/fisica/cadastrar")
     public String fisica() {
@@ -30,13 +35,17 @@ public class PessoaController {
 
     @PostMapping("/fisica/cadastrar")
     public String cadastrar(PessoaFisica pessoa) {
-        repository.criar(pessoa);
-        return "redirect:/vendas/list";
+        pessoaRepository.criar(pessoa);
+        for (Endereco endereco : pessoa.getEnderecos()) {
+            endereco.setPessoa(pessoa);
+            enderecoRepository.criar(endereco);
+        };
+        return "redirect:/vendas";
     }
 
     @PostMapping("/juridica/cadastrar")
     public String cadastrar(PessoaJuridica pessoa) {
-        repository.criar(pessoa);
-        return "redirect:/vendas/list";
+        pessoaRepository.criar(pessoa);
+        return "redirect:/vendas";
     }
 }

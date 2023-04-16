@@ -1,6 +1,5 @@
 package com.aulajpa.controller;
 
-import com.aulajpa.model.entity.ItemVenda;
 import com.aulajpa.model.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
