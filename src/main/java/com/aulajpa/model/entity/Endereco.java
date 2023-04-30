@@ -1,9 +1,6 @@
 package com.aulajpa.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -14,12 +11,16 @@ public class Endereco {
     private int id;
     private String cep;
     private String logradouro;
-    private String bairro;
 
-    private String cidade;
+
+    private String complemento;
+    private String bairro;
 
     @ManyToOne
     private Pessoa pessoa;
+
+    @ManyToOne
+    private Cidade cidade;
 
     public int getId() {
         return id;
@@ -61,11 +62,19 @@ public class Endereco {
         this.bairro = bairro;
     }
 
-    public String getCidade() {
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 }

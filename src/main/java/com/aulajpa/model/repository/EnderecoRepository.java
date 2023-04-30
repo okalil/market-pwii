@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class EnderecoRepository {
     @PersistenceContext
@@ -13,4 +15,13 @@ public class EnderecoRepository {
     public void criar(Endereco endereco) {
         em.persist(endereco);
     }
+
+    public List<Endereco> todos(Long pessoaId) {
+        var query = em.createQuery("from Endereco", Endereco.class);
+        return query.getResultList();
+    };
+
+    public Endereco buscarUm(int enderecoId) {
+        return em.find(Endereco.class, enderecoId);
+    };
 }

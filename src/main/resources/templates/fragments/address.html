@@ -2,17 +2,14 @@
   <h2>Endereço</h2>
 
   <label for="cep" >CEP</label>
-  <input name="enderecos[].cep" id="cep" />
+  <input id="cep" th:field="*{enderecos[0].cep}" />
 
   <label for="logradouro" >Logradouro</label>
-  <input name="enderecos[].logradouro" id="logradouro" />
-
-  <label for="complemento" >Complemento</label>
-  <input name="enderecos[].complemento" id="complemento" />
+  <input th:field="*{enderecos[0].logradouro}" id="logradouro" />
 
   <label for="bairro" >Bairro</label>
-  <input name="enderecos[].bairro" id="bairro" />
+  <input th:field="*{enderecos[0].bairro}" id="bairro" />
 
   <label for="cidade" >Cidade</label>
-  <input name="enderecos[].cidade" id="cidade" />
+  <input th:field="*{enderecos[0].cidade}" id="cidade" />
 </section>

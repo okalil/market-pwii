@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carrinho</title>
+</head>
+<body>
+<h1>Escolha um endereço</h1>
+
+<h3 th:text="|Total: ${venda.total}|" ></h3>
+
+<form method="post">
+    <section th:each="endereco, iteracao : ${enderecos}" >
+        <input type="radio" name="endereco.id" th:value="${endereco.id}" />
+        <h4 th:text="|Endereço ${iteracao.index + 1}|" ></h4>
+        <p th:text="|CEP: ${endereco.cep}|" ></p>
+        <p th:text="|Logradouro: ${endereco.logradouro}|" ></p>
+        <p th:text="|Bairro: ${endereco.bairro}|" ></p>
+    </section>
+
+    <button>Finalizar</button>
+</form>
+</body>
