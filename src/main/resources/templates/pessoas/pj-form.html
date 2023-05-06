@@ -10,9 +10,11 @@
 <form th:action="@{/pj/cadastrar}" th:object="${pessoaJuridica}" method="post">
     <label for="nome">Nome</label>
     <input id="nome"  th:field="*{nome}"/>
+    <em th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></em>
 
     <label>CNPJ</label>
     <input pattern="\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}"  th:field="*{cnpj}">
+    <em th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></em>
 
     <div th:replace="fragments/address.html"></div>
 

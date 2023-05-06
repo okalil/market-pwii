@@ -1,13 +1,15 @@
 package com.aulajpa.model.entity;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
+import jakarta.validation.constraints.Min;
 
 @Entity
 public class ItemVenda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
+
+    @Min( value = 1, message = "Quantidade não pode ser menor do que 1!")
     private double qtd;
     @OneToOne
     private Produto produto;

@@ -6,36 +6,43 @@
     <title>Início</title>
 </head>
 <main>
-<table>
-    <h2>Todos</h2>
+    <table>
+        <h2>Todos</h2>
 
-    <nav style="display: flex; flex-wrap: wrap; gap: 12px">
-        <a href="/pf/cadastrar">Cadastrar Pessoa Física</a>
-        <a href="/pj/cadastrar">Cadastrar Pessoa Jurídica</a>
-        <a href="/carrinho">Ver Carrinho</a>
-    </nav>
+        <nav style="display: flex; flex-wrap: wrap; gap: 12px">
+            <a href="/pf/cadastrar">Cadastrar Pessoa Física</a>
+            <a href="/pj/cadastrar">Cadastrar Pessoa Jurídica</a>
+            <a href="/carrinho">Ver Carrinho</a>
+        </nav>
 
+        <div th:if="${itemVenda != null}">
+            <div class="alert alert-danger" th:errors="${itemVenda.*}"></div>
+        </div>
 
-    <thead>
-    <th>Nome</th>
-    <th>Valor</th>
-    <th></th>
-    </thead>
+        <thead>
+        <th>Nome</th>
+        <th>Valor</th>
+        <th></th>
+        </thead>
 
-    <tbody>
-    <tr th:each="produto : ${produtos}">
-        <td th:text="${produto.descricao}"></td>
-        <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>
-        <td>
-            <form method="post" action="/carrinho/adicionar">
-                <input type="number" name="qtd" value="1"/>
-                <button name="produto.id" th:value="${produto.id}">
-                    Adicionar ao Carrinho
-                </button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <tbody>
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.descricao}"></td>
+            <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>
+            <td>
+                <form method="post">
+                    <div th:each="erro : ${#fields.detailedErrors()}">
+                        <span th:text="${erro.fieldName}+' '+${erro.message}"></span>
+                    </div>
+
+                    <input type="number" name="qtd" value="1"/>
+                    <button name="produto.id" th:value="${produto.id}">
+                        Adicionar ao Carrinho
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 </html>

@@ -3,9 +3,11 @@ package com.aulajpa.controller;
 import com.aulajpa.model.entity.Produto;
 import com.aulajpa.model.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,14 +21,17 @@ public class ProdutoController {
     ProdutoRepository repository;
 
     @GetMapping
-    public ModelAndView index(ModelMap model) {
+    public ModelAndView index(ModelMap model, Produto produto) {
         model.addAttribute("produtos", repository.todos());
         return new ModelAndView("/produtos/index", model);
     }
 
     @PostMapping
-    public String form(Produto produto) {
+    public ModelAndView form(@Valid Produto produto, BindingResult result, ModelMap model) {
+        if(result.hasErrors()) {
+            return index(model, produto);
+        }
         repository.criar(produto);
-        return "redirect:/produtos";
+        return new ModelAndView("redirect:/produtos");
     }
 }

@@ -3,6 +3,7 @@
 
   <label for="cep" >CEP</label>
   <input id="cep" th:field="*{enderecos[0].cep}" maxlength="8" />
+  <em th:if="${#fields.hasErrors('enderecos[0].cep')}" th:errors="*{enderecos[0].cep}"></em>
 
   <label for="estado.nome" >Estado</label>
   <input readonly th:field="*{enderecos[0].cidade.estado.nome}" id="estado.nome" />

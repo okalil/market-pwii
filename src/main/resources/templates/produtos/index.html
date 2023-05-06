@@ -3,17 +3,19 @@
       th:replace="~{fragments/layout :: layout(~{::head},~{::main})}"
 >
 <head th:replace="fragments/head :: head(~{::title})">
-    <title>Gestão Produtos</title>
+    <title>Gestão de Produtos</title>
 </head>
 <main>
-<form method="post">
+<form method="post" th:object="${produto}">
     <h2>Criar Produtos</h2>
 
     <label for="descricao">Descrição</label>
-    <input autofocus id=descricao type="text" name="descricao"/>
+    <input autofocus id=descricao type="text" th:field="*{descricao}"/>
+    <em th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></em>
 
     <label for="valor">Valor</label>
-    <input id="valor" type="number" name="valor">
+    <input id="valor" type="number" th:field="*{valor}">
+    <em th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></em>
 
     <button>Salvar</button>
 </form>

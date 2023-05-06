@@ -1,6 +1,7 @@
 package com.aulajpa.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public abstract class Pessoa {
     @GenericGenerator(name = "inc", strategy = "increment")
     private Long id;
 
+    @NotBlank(message = "Nome é obrigatório!")
     private String nome;
 
     @OneToMany(mappedBy = "comprador")

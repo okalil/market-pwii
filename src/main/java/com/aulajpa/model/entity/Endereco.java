@@ -2,6 +2,7 @@ package com.aulajpa.model.entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.beans.Encoder;
@@ -13,6 +14,8 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
+
+    @NotBlank(message = "CEP é obrigatório!")
     private String cep;
     private String logradouro;
 
