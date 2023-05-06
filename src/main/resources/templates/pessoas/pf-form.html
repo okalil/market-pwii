@@ -1,13 +1,11 @@
 <!doctype html>
-<html lang="pt" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cadastro de Pessoa</title>
-</head>name
-<body>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::head},~{::main})}"
+>
+<head th:replace="fragments/head :: head(~{::title})">
+    <title>Cadastrar Pessoa Física</title>
+</head>
+<main>
 <h1>Cadastrar Pessoa Física</h1>
 <form th:action="@{/pf/cadastrar}" th:object="${pessoaFisica}" method="post">
     <label for="nome">Nome</label>
@@ -20,5 +18,5 @@
 
     <button>Enviar</button>
 </form>
-</body>
+</main>
 </html>

@@ -4,21 +4,21 @@ package com.aulajpa.model.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Cidade {
     @Id
-    @GeneratedValue(generator = "inc")
-    @GenericGenerator(name = "inc", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Estado estado;
 
-    @OneToMany
-    private List<Endereco> enderecos;
+    @OneToMany(mappedBy = "cidade")
+    private List<Endereco> enderecos = new ArrayList<>();
 
     public int getId() {
         return id;

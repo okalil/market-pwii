@@ -89,7 +89,7 @@ public class CarrinhoController {
         if(comprador == null) return "redirect:/carrinho";
 
         model.addAttribute("venda", venda);
-        model.addAttribute("enderecos", enderecoRepository.todos(comprador.getId()));
+        model.addAttribute("enderecos", enderecoRepository.todosPorPessoa(comprador.getId()));
 
         return "/endereco";
     }
@@ -97,6 +97,7 @@ public class CarrinhoController {
     @PostMapping("finalizar")
     public String finalizar(Endereco endereco, HttpSession session) {
         endereco = enderecoRepository.buscarUm(endereco.getId());
+
         vendaRepository.criar(venda);
         session.invalidate();
 

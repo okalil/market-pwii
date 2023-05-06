@@ -1,17 +1,20 @@
 package com.aulajpa.model.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.beans.Encoder;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Endereco {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(generator = "inc")
-    @GenericGenerator(name = "inc", strategy = "increment")
     private int id;
     private String cep;
     private String logradouro;
-
 
     private String complemento;
     private String bairro;
@@ -19,8 +22,19 @@ public class Endereco {
     @ManyToOne
     private Pessoa pessoa;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Cidade cidade;
+
+    @OneToMany(mappedBy = "endereco")
+    private List<Venda> vendas = new ArrayList<>();
+
+    public List<Venda> getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(List<Venda> vendas) {
+        this.vendas = vendas;
+    }
 
     public int getId() {
         return id;

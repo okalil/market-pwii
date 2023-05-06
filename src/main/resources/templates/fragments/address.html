@@ -2,14 +2,47 @@
   <h2>Endereço</h2>
 
   <label for="cep" >CEP</label>
-  <input id="cep" th:field="*{enderecos[0].cep}" />
+  <input id="cep" th:field="*{enderecos[0].cep}" maxlength="8" />
 
-  <label for="logradouro" >Logradouro</label>
-  <input th:field="*{enderecos[0].logradouro}" id="logradouro" />
+  <label for="estado.nome" >Estado</label>
+  <input readonly th:field="*{enderecos[0].cidade.estado.nome}" id="estado.nome" />
+  <input th:field="*{enderecos[0].cidade.estado.id}" type="hidden" id="estado.id" />
+
+  <label for="cidade.nome" >Cidade</label>
+  <input readonly th:field="*{enderecos[0].cidade.nome}" id="cidade.nome" />
+  <input th:field="*{enderecos[0].cidade.id}" type="hidden" id="cidade.id" />
 
   <label for="bairro" >Bairro</label>
-  <input th:field="*{enderecos[0].bairro}" id="bairro" />
+  <input readonly th:field="*{enderecos[0].bairro}" id="bairro" />
 
-  <label for="cidade" >Cidade</label>
-  <input th:field="*{enderecos[0].cidade}" id="cidade" />
+  <label for="logradouro" >Logradouro</label>
+  <input readonly th:field="*{enderecos[0].logradouro}" id="logradouro" />
+
+  <script >
+      const inputs = {
+        cep: document.getElementById('cep'),
+        estadoNome: document.getElementById('estado.nome'),
+        cidadeNome: document.getElementById('cidade.nome'),
+        bairro: document.getElementById('bairro'),
+        logradouro: document.getElementById('logradouro')
+      }
+
+      function fetchCEP(cep) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(data => {
+        if(!data) return;
+          inputs.estadoNome.value = data.uf;
+          inputs.cidadeNome.value = data.localidade;
+          inputs.bairro.value = data.bairro;
+          inputs.logradouro.value = data.logradouro;
+        })
+      }
+
+      inputs.cep.addEventListener('input', (e) => {
+        if(inputs.cep.value.trim().length === 8) {
+          fetchCEP(inputs.cep.value)
+        }
+      })
+</script>
 </section>

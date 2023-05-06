@@ -1,5 +1,6 @@
 package com.aulajpa.model.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.context.annotation.Scope;
@@ -25,8 +26,30 @@ public class Venda {
     @OneToMany(mappedBy = "venda")
     List<ItemVenda> itens;
 
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    @ManyToOne
+    Venda venda;
+
     @ManyToOne
     Pessoa comprador;
+
+    @ManyToOne
+    Endereco endereco;
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
     public Venda() {
         this.data = LocalDate.now();

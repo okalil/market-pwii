@@ -4,19 +4,19 @@ package com.aulajpa.model.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Estado {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(generator = "inc")
-    @GenericGenerator(name = "inc", strategy = "increment")
     private int id;
     private String nome;
     private String sigla;
 
     @OneToMany(mappedBy = "estado")
-    private List<Cidade> cidades;
+    private List<Cidade> cidades = new ArrayList<>();
 
     public int getId() {
         return id;

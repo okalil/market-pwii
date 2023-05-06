@@ -1,24 +1,21 @@
 <!doctype html>
-<html lang="pt" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cadastro de Pessoa</title>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::head},~{::main})}"
+>
+<head th:replace="fragments/head :: head(~{::title})">
+    <title>Cadastro de Pessoa Jurídica</title>
 </head>
-<body>
+<main>
 <h1>Cadastrar Pessoa Jurídica</h1>
-<form method="post">
+<form th:action="@{/pj/cadastrar}" th:object="${pessoaJuridica}" method="post">
     <label for="nome">Nome</label>
-    <input id="nome" name="pessoa.nome"/>
+    <input id="nome"  th:field="*{nome}"/>
 
     <label>CNPJ</label>
-    <input pattern="\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}" name="pessoa.cnpj">
+    <input pattern="\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}"  th:field="*{cnpj}">
 
     <div th:replace="fragments/address.html"></div>
 
     <button>Enviar</button>
 </form>
-</body>
-</html>
+</main>

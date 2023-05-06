@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+
 @RequestMapping("/pf")
 @Controller
 public class PessoaFisicaController {
@@ -25,14 +27,11 @@ public class PessoaFisicaController {
     public String fisica(PessoaFisica pessoaFisica) {
         return "/pessoas/pf-form";
     }
+
     @Transactional
     @PostMapping("/cadastrar")
     public String cadastrar(PessoaFisica pessoaFisica) {
         pessoaFisicaRepository.criar(pessoaFisica);
-        for (Endereco endereco : pessoaFisica.getEnderecos()) {
-            endereco.setPessoa(pessoaFisica);
-            enderecoRepository.criar(endereco);
-        }
         return "redirect:/";
     }
 }

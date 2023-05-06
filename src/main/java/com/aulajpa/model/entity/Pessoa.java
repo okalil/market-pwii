@@ -19,7 +19,7 @@ public abstract class Pessoa {
     @OneToMany(mappedBy = "comprador")
     List<Venda> compras;
 
-    @OneToMany(mappedBy = "pessoa")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.PERSIST)
     List<Endereco> enderecos;
 
     public List<Endereco> getEnderecos() {

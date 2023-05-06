@@ -1,6 +1,7 @@
 package com.aulajpa.controller;
 
 import com.aulajpa.model.entity.Endereco;
+import com.aulajpa.model.entity.PessoaFisica;
 import com.aulajpa.model.entity.PessoaJuridica;
 import com.aulajpa.model.repository.EnderecoRepository;
 import com.aulajpa.model.repository.PessoaJuridicaRepository;
@@ -23,7 +24,7 @@ public class PessoaJuridicaController {
     EnderecoRepository enderecoRepository;
 
     @GetMapping("/cadastrar")
-    public String juridica() {
+    public String juridica(PessoaJuridica pessoaJuridica) {
         return "/pessoas/pj-form";
     }
 
