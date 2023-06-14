@@ -1,7 +1,8 @@
-package com.aulajpa.model.repository;
+package com.market.model.repository;
 
-import com.aulajpa.model.entity.Pessoa;
-import com.aulajpa.model.entity.PessoaJuridica;
+import com.market.model.entity.Pessoa;
+import com.market.model.entity.PessoaJuridica;
+import com.market.model.entity.Venda;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -24,7 +25,13 @@ public class PessoaJuridicaRepository {
     }
 
     public List<Pessoa> todos() {
-        Query query = em.createQuery("from Pessoa", Pessoa.class);
+        Query query = em.createQuery("from PessoaJuridica", Pessoa.class);
+        return query.getResultList();
+    }
+
+    public List<Venda> todosPorNome(String nome) {
+        Query query = em.createQuery("from PessoaJuridica p where lower(p.nome) like lower(:nome)");
+        query.setParameter("nome", "%" + nome + "%");
         return query.getResultList();
     }
 }

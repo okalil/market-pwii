@@ -1,6 +1,5 @@
-package com.aulajpa.model.entity;
+package com.market.model.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.context.annotation.Scope;

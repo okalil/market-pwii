@@ -5,31 +5,45 @@
 <head th:replace="fragments/head :: head(~{::title})">
     <title>Gestão de Produtos</title>
 </head>
-<main>
-<form method="post" th:object="${produto}">
-    <h2>Criar Produtos</h2>
+<main class="container">
+    <form method="post" th:action="@{/produtos}" th:object="${produto}" class="mb-4">
+        <h2 class="mb-4" >Criar Produtos</h2>
 
-    <label for="descricao">Descrição</label>
-    <input autofocus id=descricao type="text" th:field="*{descricao}"/>
-    <em th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></em>
+        <div class="row g-3 align-items-center">
 
-    <label for="valor">Valor</label>
-    <input id="valor" type="number" th:field="*{valor}">
-    <em th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></em>
+            <div class="col-auto"><label class="form-label" for="descricao">Descrição</label></div>
 
-    <button>Salvar</button>
-</form>
-<table>
-    <h2>Produtos</h2>
-    <thead>
-    <th>DESCRICAO</th>
-    <th>VALOR</th>
-    </thead>
-    <tbody>
-    <tr th:each="produto : ${produtos}">
-        <td th:text="${produto.descricao}"></td>
-        <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>
-    </tr>
-    </tbody>
-</table>
+            <div class="col-auto">
+                <input th:class="form-control" th:errorclass="is-invalid" autofocus id=descricao type="text"
+                       th:field="*{descricao}"/>
+                <em class="invalid-feedback" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></em>
+            </div>
+
+            <div class="col-auto">
+                <label for="valor">Valor</label>
+            </div>
+            <div class="col-auto">
+                <input th:class="form-control" th:errorclass="is-invalid" id="valor" type="number" th:field="*{valor}">
+                <em class="invalid-feedback" th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></em>
+            </div>
+
+            <div class="col-auto">
+                <button class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+
+    </form>
+    <table class="table">
+        <h2>Produtos</h2>
+        <thead>
+        <th>DESCRICAO</th>
+        <th>VALOR</th>
+        </thead>
+        <tbody>
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.descricao}"></td>
+            <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>
+        </tr>
+        </tbody>
+    </table>
 </main>

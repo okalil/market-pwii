@@ -5,15 +5,9 @@
 <head th:replace="fragments/head :: head(~{::title})">
     <title>Início</title>
 </head>
-<main>
-    <table>
+<main class="container">
+    <table class="table">
         <h2>Todos</h2>
-
-        <nav style="display: flex; flex-wrap: wrap; gap: 12px">
-            <a href="/pf/cadastrar">Cadastrar Pessoa Física</a>
-            <a href="/pj/cadastrar">Cadastrar Pessoa Jurídica</a>
-            <a href="/carrinho">Ver Carrinho</a>
-        </nav>
 
         <div th:if="${itemVenda != null}">
             <div class="alert alert-danger" th:errors="${itemVenda.*}"></div>
@@ -25,19 +19,20 @@
         <th></th>
         </thead>
 
-        <tbody>
+        <tbody >
         <tr th:each="produto : ${produtos}">
             <td th:text="${produto.descricao}"></td>
             <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>
             <td>
-                <form method="post">
+                <form th:action="@{/}" method="post" class="d-flex gap-3">
                     <div th:each="erro : ${#fields.detailedErrors()}">
                         <span th:text="${erro.fieldName}+' '+${erro.message}"></span>
                     </div>
 
-                    <input type="number" name="qtd" value="1"/>
-                    <button name="produto.id" th:value="${produto.id}">
-                        Adicionar ao Carrinho
+                    <input class="form-control" type="number" name="qtd" value="1"/>
+
+                    <button class="btn btn-primary" name="produto.id" th:value="${produto.id}">
+                        Comprar
                     </button>
                 </form>
             </td>

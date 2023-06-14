@@ -1,7 +1,7 @@
-package com.aulajpa.controller;
+package com.market.controller;
 
-import com.aulajpa.model.entity.Produto;
-import com.aulajpa.model.repository.ProdutoRepository;
+import com.market.model.entity.Produto;
+import com.market.model.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

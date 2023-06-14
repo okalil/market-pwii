@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::head},~{::main})}"
+>
+<head th:replace="fragments/head :: head(~{::title})">
+    <title>Lista de Clientes PJ</title>
+</head>
+<main class="container">
+    <table class="table">
+        <h1>Lista de Clientes PJ</h1>
+
+        <form method="get">
+            <h2>Filtrar</h2>
+
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label class="form-label">Nome</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control" type="text" name="nome"/>
+                </div>
+
+                <div class="col-auto" >
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+
+            </div>
+        </form>
+
+        <thead>
+        <th>ID</th>
+        <th>NOME</th>
+        </thead>
+        <tbody>
+        <tr th:each="pessoa : ${pessoas}">
+            <td th:text="${pessoa.id}"></td>
+            <td th:text="${pessoa.nome}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>

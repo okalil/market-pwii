@@ -5,45 +5,51 @@
 <head th:replace="fragments/head :: head(~{::title})">
     <title>Carrinho</title>
 </head>
-<main>
-<h1>Carrinho</h1>
-<table>
-    <h2>Itens</h2>
+<main class="container">
+    <h1>Carrinho</h1>
+    <table class="table">
+        <h2>Itens</h2>
 
-    <thead>
-    <th>Produto</th>
-    <th>Quantidade</th>
-    <th>Preço Unidade</th>
-    <th>Total do Item</th>
-    <th></th>
-    </thead>
+        <thead>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Unidade</th>
+        <th>Total do Item</th>
+        <th></th>
+        </thead>
 
-    <tbody>
-    <tr th:each="item,iteracao : ${venda.itens}">
-        <td th:text="${item.produto.descricao}"></td>
-        <td th:text="${item.qtd}"></td>
-        <td th:text="${item.produto.valor}"></td>
-        <th th:text="${item.total}"></th>
-        <td>
-            <form method="post" action="/carrinho/delete">
-                <button name="index" th:value="${iteracao.index}">Deletar</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <tbody>
+        <tr th:each="item,iteracao : ${venda.itens}">
+            <td th:text="${item.produto.descricao}"></td>
+            <td th:text="${item.qtd}"></td>
+            <td th:text="${item.produto.valor}"></td>
+            <th th:text="${item.total}"></th>
+            <td>
+                <form method="post" th:action="@{/carrinho/delete}"
+                >
+                    <button name="index" th:value="${iteracao.index}" class="btn btn-danger">Deletar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-<h3 th:text="|Total: ${venda.total}|" ></h3>
+    <h3 th:text="|Total: ${venda.total}|"></h3>
 
-<form method="post" action="/carrinho">
-    <select name="id">
-        <option
-                th:each="pessoa : ${pessoas}"
-                th:text="${pessoa.nome}"
-                th:value="${pessoa.id}">
-        </option>
-    </select>
+    <form method="post" th:action="@{/carrinho}" class="d-flex gap-2">
+        <select class="form-select" name="id">
+            <option
+                    th:each="pessoa : ${pessoas}"
+                    th:text="${pessoa.nome}"
+                    th:value="${pessoa.id}">
+            </option>
+        </select>
 
-    <button>Continuar</button>
-</form>
+        <div th:if="${erro != null}">
+            <div class="alert alert-danger" th:text="${erro}"></div>
+        </div>
+
+        <button class="btn btn-primary">Continuar</button>
+    </form>
 </main>
+<!--onsubmit="if(!window.confirm('Quer mesmo deletar este item?'))event.preventDefault()"-->

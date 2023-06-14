@@ -1,6 +1,6 @@
-package com.aulajpa.model.repository;
+package com.market.model.repository;
 
-import com.aulajpa.model.entity.Produto;
+import com.market.model.entity.Produto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -15,6 +15,12 @@ public class ProdutoRepository {
 
     public List<Produto> todos() {
         Query query = em.createQuery("from Produto", Produto.class);
+        return query.getResultList();
+    }
+
+    public List<Produto> todosPorNome(String descricao) {
+        Query query = em.createQuery("from Produto p where lower(p.descricao) like lower(:descricao)", Produto.class);
+        query.setParameter("descricao", "%" + descricao + "%");
         return query.getResultList();
     }
 

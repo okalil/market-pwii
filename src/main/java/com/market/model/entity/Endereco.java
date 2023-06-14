@@ -1,11 +1,9 @@
-package com.aulajpa.model.entity;
+package com.market.model.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.GenericGenerator;
 
-import java.beans.Encoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +15,18 @@ public class Endereco {
 
     @NotBlank(message = "CEP é obrigatório!")
     private String cep;
+
+    @NotBlank(message = "Logradouro é obrigatório!")
     private String logradouro;
 
     private String complemento;
+    @NotBlank(message = "Bairro é obrigatório!")
     private String bairro;
 
     @ManyToOne
     private Pessoa pessoa;
 
+    @Valid
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Cidade cidade;
 

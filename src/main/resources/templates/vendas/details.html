@@ -1,34 +1,33 @@
 <!doctype html>
-<html lang="pt" xmlns:th="http://www.thymeleaf.org"
+<html lang="pt"
+      xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::head},~{::main})}"
 >
 <head th:replace="fragments/head :: head(~{::title})">
     <title th:text="|Pedido #${venda.id}|"></title>
 </head>
 <main>
-<h1 th:text="|Pedido #${venda.id}|"></h1>
+    <h1 th:text="|Pedido #${venda.id}|"></h1>
+    <p th:text="|Data: ${#temporals.format(venda.data, 'dd/MM/yyyy')}|"></p>
+    <p th:text="|Cliente: ${venda.comprador.nome}|"></p>
+    <p th:text="|Total: ${venda.total}|" ></p>
+    <table>
+        <h2>Itens</h2>
 
-<p th:text="|Cliente: ${venda.comprador.nome}|"></p>
+        <thead>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Unidade</th>
+        <th>Total do Item</th>
+        </thead>
 
-<p th:text="|Total: ${venda.total}|" ></p>
-
-<table>
-    <h2>Itens</h2>
-
-    <thead>
-    <th>Produto</th>
-    <th>Quantidade</th>
-    <th>Preço Unidade</th>
-    <th>Total do Item</th>
-    </thead>
-
-    <tbody>
-    <tr th:each="item : ${venda.itens}">
-        <td th:text="${item.produto.descricao}"></td>
-        <td th:text="${item.qtd}"></td>
-        <td th:text="${item.produto.valor}"></td>
-        <th th:text="${item.total}"></th>
-    </tr>
-    </tbody>
-</table>
+        <tbody>
+        <tr th:each="item : ${venda.itens}">
+            <td th:text="${item.produto.descricao}"></td>
+            <td th:text="${item.qtd}"></td>
+            <td th:text="${item.produto.valor}"></td>
+            <th th:text="${item.total}"></th>
+        </tr>
+        </tbody>
+    </table>
 </main>

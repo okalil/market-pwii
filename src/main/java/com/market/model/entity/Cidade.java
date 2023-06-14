@@ -1,8 +1,9 @@
-package com.aulajpa.model.entity;
+package com.market.model.entity;
 
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,11 @@ public class Cidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotBlank(message = "Cidade é obrigatório!")
     private String nome;
 
+    @Valid
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Estado estado;
 

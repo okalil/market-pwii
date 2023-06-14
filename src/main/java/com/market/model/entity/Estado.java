@@ -1,8 +1,8 @@
-package com.aulajpa.model.entity;
+package com.market.model.entity;
 
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,8 @@ public class Estado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
+
+    @NotBlank(message = "Estado é obrigatório!")
     private String nome;
     private String sigla;
 

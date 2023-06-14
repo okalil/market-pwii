@@ -9,14 +9,19 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>aulajpa</artifactId>
+    <artifactId>market</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>aulajpa</name>
-    <description>Aula JPA</description>
+    <name>market</name>
+    <description>Market PWII</description>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>

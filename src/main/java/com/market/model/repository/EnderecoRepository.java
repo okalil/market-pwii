@@ -1,6 +1,6 @@
-package com.aulajpa.model.repository;
+package com.market.model.repository;
 
-import com.aulajpa.model.entity.Endereco;
+import com.market.model.entity.Endereco;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

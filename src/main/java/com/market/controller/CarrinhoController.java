@@ -1,24 +1,19 @@
-package com.aulajpa.controller;
+package com.market.controller;
 
-import com.aulajpa.model.entity.*;
-import com.aulajpa.model.repository.EnderecoRepository;
-import com.aulajpa.model.repository.PessoaJuridicaRepository;
-import com.aulajpa.model.repository.ProdutoRepository;
-import com.aulajpa.model.repository.VendaRepository;
+import com.market.model.entity.*;
+import com.market.model.repository.EnderecoRepository;
+import com.market.model.repository.PessoaJuridicaRepository;
+import com.market.model.repository.ProdutoRepository;
+import com.market.model.repository.VendaRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Scope("request")
 @Transactional
@@ -42,15 +37,20 @@ public class CarrinhoController {
     Venda venda;
 
     @GetMapping
-    public ModelAndView carrinho(ModelMap model) {
+    public String carrinho(ModelMap model) {
         model.addAttribute("venda", venda);
         model.addAttribute("pessoas", pessoaRepository.todos());
 
-        return new ModelAndView("/carrinho", model);
+        return "/carrinho";
     }
 
     @PostMapping
-    public String continuar(Long id) {
+    public String continuar(Long id, ModelMap model) {
+        if(venda.getItens().size() < 1) {
+            model.addAttribute("erro", "Adicione pelo menos um item ao carrinho!");
+            return carrinho(model);
+        }
+
         Pessoa pessoa = pessoaRepository.buscarUm(id);
         venda.setComprador(pessoa);
 
@@ -76,9 +76,25 @@ public class CarrinhoController {
     }
 
     @PostMapping("finalizar")
-    public String finalizar(Endereco endereco, HttpSession session) {
-        endereco = enderecoRepository.buscarUm(endereco.getId());
+    public String finalizar(Integer enderecoId, HttpSession session, ModelMap model) {
+        if(venda.getItens().size() < 1) {
+            model.addAttribute("erro", "Adicione pelo menos um item ao carrinho!");
+            return carrinho(model);
+        }
 
+        if(enderecoId == null) {
+            model.addAttribute("erro", "Selecione um endereço!");
+            return mostrarFinalizar(model);
+        }
+
+        Endereco endereco = enderecoRepository.buscarUm(enderecoId);
+
+        if(endereco == null) {
+            model.addAttribute("erro", "Selecione um endereço válido!");
+            return mostrarFinalizar(model);
+        }
+
+        venda.setEndereco(endereco);
         vendaRepository.criar(venda);
         session.invalidate();
 

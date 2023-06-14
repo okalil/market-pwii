@@ -1,6 +1,7 @@
-package com.aulajpa.model.entity;
+package com.market.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,6 +22,7 @@ public abstract class Pessoa {
     @OneToMany(mappedBy = "comprador")
     List<Venda> compras;
 
+    @Valid
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.PERSIST)
     List<Endereco> enderecos;
 

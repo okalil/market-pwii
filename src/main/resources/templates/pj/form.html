@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::head},~{::main})}"
+>
+<head th:replace="fragments/head :: head(~{::title})">
+    <title>Cadastro de Pessoa Jurídica</title>
+</head>
+<main>
+    <h1>Cadastrar Pessoa Jurídica</h1>
+    <form th:action="@{/pj/cadastrar}" th:object="${pessoaJuridica}" method="post">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label class="form-label" for="nome">Nome</label>
+                <input th:class="form-control" th:errorclass="is-invalid" id="nome" th:field="*{nome}"/>
+                <em class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></em>
+            </div>
+
+
+            <div class="col-md-4">
+                <label class="form-label">CNPJ</label>
+                <input th:class="form-control" th:errorclass="is-invalid" pattern="\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}" th:field="*{cnpj}">
+                <em class="invalid-feedback" th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></em>
+            </div>
+        </div>
+
+        <div th:replace="fragments/address.html"></div>
+
+        <button class="btn btn-primary mt-4">Enviar</button>
+    </form>
+</main>

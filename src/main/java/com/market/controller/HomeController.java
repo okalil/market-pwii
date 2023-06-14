@@ -1,20 +1,20 @@
-package com.aulajpa.controller;
+package com.market.controller;
 
-import com.aulajpa.model.entity.ItemVenda;
-import com.aulajpa.model.entity.Produto;
-import com.aulajpa.model.entity.Venda;
-import com.aulajpa.model.repository.ProdutoRepository;
+import com.market.model.entity.ItemVenda;
+import com.market.model.entity.Produto;
+import com.market.model.entity.Venda;
+import com.market.model.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -31,14 +31,18 @@ public class HomeController {
     Venda venda;
 
     @GetMapping
-    public ModelAndView index(ModelMap model) {
-        model.addAttribute("produtos", produtoRepository.todos());
+    public ModelAndView index(ModelMap model, @RequestParam(value = "nome", required = false) String nome) {
+        if (nome == null || nome.isEmpty())
+            model.addAttribute("produtos", produtoRepository.todos());
+        else
+            model.addAttribute("produtos", produtoRepository.todosPorNome(nome));
         return new ModelAndView("/home", model);
     }
-    @PostMapping
-    public ModelAndView adicionar(@Valid ItemVenda itemVenda, BindingResult result, ModelMap model) {
-        if(result.hasErrors()) {
-            return index(model);
+
+    @PostMapping("/")
+    public ModelAndView adicionar(@Valid ItemVenda itemVenda, BindingResult result, ModelMap model, @RequestParam(value = "nome", required = false) String nome) {
+        if (result.hasErrors()) {
+            return index(model, nome);
         }
 
         List<ItemVenda> itens = venda.getItens();

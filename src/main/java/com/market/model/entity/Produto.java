@@ -1,4 +1,4 @@
-package com.aulajpa.model.entity;
+package com.market.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

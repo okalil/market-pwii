@@ -1,25 +1,54 @@
 <section>
-  <h2>Endereço</h2>
+    <h2>Endereço</h2>
 
-  <label for="cep" >CEP</label>
-  <input id="cep" th:field="*{enderecos[0].cep}" maxlength="8" />
-  <em th:if="${#fields.hasErrors('enderecos[0].cep')}" th:errors="*{enderecos[0].cep}"></em>
+    <div class="row">
+        <div class="col-md-4">
+            <label class="form-label" for="cep">CEP</label>
+            <input th:class="form-control" th:errorclass="is-invalid" id="cep" th:field="*{enderecos[0].cep}"
+                   maxlength="8"/>
+            <em th:if="${#fields.hasErrors('enderecos[0].cep')}" th:errors="*{enderecos[0].cep}"></em>
+        </div>
 
-  <label for="estado.nome" >Estado</label>
-  <input readonly th:field="*{enderecos[0].cidade.estado.nome}" id="estado.nome" />
-  <input th:field="*{enderecos[0].cidade.estado.id}" type="hidden" id="estado.id" />
+        <div class="col-md-4">
+            <label class="form-label" for="estado.nome">Estado</label>
+            <input th:class="form-control" th:errorclass="is-invalid" readonly
+                   th:field="*{enderecos[0].cidade.estado.nome}"
+                   id="estado.nome"/>
+            <input th:field="*{enderecos[0].cidade.estado.id}" type="hidden" id="estado.id"/>
+            <em class="invalid-feedback" th:if="${#fields.hasErrors('enderecos[0].cidade.estado.nome')}"
+                th:errors="*{enderecos[0].cidade.estado.nome}"></em>
+        </div>
 
-  <label for="cidade.nome" >Cidade</label>
-  <input readonly th:field="*{enderecos[0].cidade.nome}" id="cidade.nome" />
-  <input th:field="*{enderecos[0].cidade.id}" type="hidden" id="cidade.id" />
+        <div class="col-md-4">
+            <label class="form-label" for="cidade.nome">Cidade</label>
+            <input th:class="form-control" th:errorclass="is-invalid" readonly th:field="*{enderecos[0].cidade.nome}"
+                   id="cidade.nome"/>
+            <input th:field="*{enderecos[0].cidade.id}" type="hidden" id="cidade.id"/>
+            <em class="invalid-feedback" th:if="${#fields.hasErrors('enderecos[0].cidade.nome')}"
+                th:errors="*{enderecos[0].cidade.nome}"></em>
+        </div>
 
-  <label for="bairro" >Bairro</label>
-  <input readonly th:field="*{enderecos[0].bairro}" id="bairro" />
+        <div class="col-md-4">
 
-  <label for="logradouro" >Logradouro</label>
-  <input readonly th:field="*{enderecos[0].logradouro}" id="logradouro" />
+            <label class="form-label" for="bairro">Bairro</label>
+            <input th:class="form-control" th:errorclass="is-invalid" readonly th:field="*{enderecos[0].bairro}"
+                   id="bairro"/>
+            <em class="invalid-feedback" th:if="${#fields.hasErrors('enderecos[0].bairro')}"
+                th:errors="*{enderecos[0].bairro}"></em>
+        </div>
 
-  <script >
+        <div class="col-md-4">
+
+            <label class="form-label" for="logradouro">Logradouro</label>
+            <input th:class="form-control" th:errorclass="is-invalid" readonly
+                   th:field="*{enderecos[0].logradouro}"
+                   id="logradouro"/>
+            <em class="invalid-feedback" th:if="${#fields.hasErrors('enderecos[0].logradouro')}"
+                th:errors="*{enderecos[0].logradouro}"></em>
+        </div>
+    </div>
+
+    <script>
       const inputs = {
         cep: document.getElementById('cep'),
         estadoNome: document.getElementById('estado.nome'),
@@ -45,5 +74,11 @@
           fetchCEP(inputs.cep.value)
         }
       })
-</script>
+
+
+
+
+
+
+    </script>
 </section>

@@ -1,19 +1,18 @@
-package com.aulajpa.controller;
+package com.market.controller;
 
-import com.aulajpa.model.entity.Endereco;
-import com.aulajpa.model.entity.PessoaFisica;
-import com.aulajpa.model.entity.PessoaJuridica;
-import com.aulajpa.model.repository.EnderecoRepository;
-import com.aulajpa.model.repository.PessoaJuridicaRepository;
+import com.market.model.entity.PessoaJuridica;
+import com.market.model.repository.EnderecoRepository;
+import com.market.model.repository.PessoaJuridicaRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Transactional
 @Controller
@@ -25,9 +24,19 @@ public class PessoaJuridicaController {
     @Autowired
     EnderecoRepository enderecoRepository;
 
+    @GetMapping
+    public String listar(ModelMap model, @RequestParam(value = "nome", required = false) String nome) {
+        if (nome == null || nome.isEmpty())
+            model.addAttribute("pessoas", pessoaRepository.todos());
+        else
+            model.addAttribute("pessoas", pessoaRepository.todosPorNome(nome));
+
+        return "pj/list";
+    }
+
     @GetMapping("/cadastrar")
     public String juridica(PessoaJuridica pessoaJuridica) {
-        return "/pessoas/pj-form";
+        return "/pj/form";
     }
 
     @PostMapping("/cadastrar")
