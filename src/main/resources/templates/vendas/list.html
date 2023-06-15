@@ -5,34 +5,41 @@
 <head th:replace="fragments/head :: head(~{::title})">
     <title>Pedidos</title>
 </head>
-<main>
-<table>
-    <h1>Pedidos</h1>
+<main class="container">
+    <table class="table">
+        <h1>Pedidos</h1>
 
-    <form method="get"  >
-        <h2>Filtrar</h2>
-        <label>Data</label>
-        <input type="date" name="data" />
+        <form method="get">
+            <h2>Filtrar</h2>
 
-        <button>Filtrar</button>
-    </form>
+            <div class="row align-items-end">
+                <div class="form-group col-md-4">
+                    <label>Data</label>
+                    <input class="form-control" type="date" name="data"/>
+                </div>
 
-    <thead>
-    <th>ID</th>
-    <th>DATA</th>
-    <th>TOTAL</th>
-    <th></th>
-    </thead>
-    <tbody>
-    <tr th:each="venda : ${vendas}">
-        <td th:text="${venda.id}"></td>
-        <td th:text="${#temporals.format(venda.data, 'dd/MM/YYY')}"></td>
-        <td th:text="${venda.total}"></td>
-        <td th:if="${venda.comprador != null}" th:text="${venda.comprador.nome}"></td>
-        <td>
-            <a th:href="|/vendas/${venda.id}|">Ver Detalhes</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <div class="col-md-4">
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+
+        <thead>
+        <th>ID</th>
+        <th>DATA</th>
+        <th>TOTAL</th>
+        <th></th>
+        </thead>
+        <tbody>
+        <tr th:each="venda : ${vendas}">
+            <td th:text="${venda.id}"></td>
+            <td th:text="${#temporals.format(venda.data, 'dd/MM/YYY')}"></td>
+            <td th:text="${venda.total}"></td>
+            <td th:if="${venda.comprador != null}" th:text="${venda.comprador.nome}"></td>
+            <td>
+                <a th:href="|/vendas/${venda.id}|">Ver Detalhes</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </main>

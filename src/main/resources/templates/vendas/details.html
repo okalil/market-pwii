@@ -6,12 +6,12 @@
 <head th:replace="fragments/head :: head(~{::title})">
     <title th:text="|Pedido #${venda.id}|"></title>
 </head>
-<main>
+<main class="container">
     <h1 th:text="|Pedido #${venda.id}|"></h1>
     <p th:text="|Data: ${#temporals.format(venda.data, 'dd/MM/yyyy')}|"></p>
     <p th:text="|Cliente: ${venda.comprador.nome}|"></p>
-    <p th:text="|Total: ${venda.total}|" ></p>
-    <table>
+    <p th:text="|Total: ${venda.total}|"></p>
+    <table class="table">
         <h2>Itens</h2>
 
         <thead>

@@ -16,13 +16,15 @@ public class VendaRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public List<Venda> todos() {
-        Query query = em.createQuery("from Venda");
+    public List<Venda> findAllByPessoaUsuario(String usuario) {
+        var query = em.createQuery("from Venda v where v.comprador.usuario.usuario = :usuario");
+        query.setParameter("usuario", usuario);
         return query.getResultList();
     }
 
-    public List<Venda> todosPorData(LocalDate data) {
-        Query query = em.createQuery("from Venda v where v.data = :data");
+    public List<Venda> findAllByPessoaUsuarioAndData(String usuario, LocalDate data) {
+        Query query = em.createQuery("from Venda v where v.data = :data and v.compardor.usuario.usuario = :usuario");
+        query.setParameter("usuario", usuario);
         query.setParameter("data", data);
         return query.getResultList();
     }

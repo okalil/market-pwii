@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/carrinho">Carrinho</a>
                     </li>
+                    <li th:if="${authenticated == true}" class="nav-item">
+                        <a class="nav-link active" href="/vendas">Compras</a>
+                    </li>
 
                     <li th:if="${authenticated == null}" class="nav-item">
                         <form action="/login">
@@ -42,7 +45,7 @@
                     </li>
                 </ul>
 
-                <form class="d-flex" role="search">
+                <form class="d-flex" role="search" th:action="@{/}">
                     <input name="nome" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>

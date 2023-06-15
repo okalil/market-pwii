@@ -43,10 +43,12 @@ public class VendaController {
         } else {
             model.addAttribute("isAdmin", false);
         }
+
+        String usuario = authentication.getName();
         if (data == null)
-            model.addAttribute("vendas", vendaRepository.todos());
+            model.addAttribute("vendas", vendaRepository.findAllByPessoaUsuario(usuario));
         else
-            model.addAttribute("vendas", vendaRepository.todosPorData(data));
+            model.addAttribute("vendas", vendaRepository.findAllByPessoaUsuarioAndData(usuario, data));
         return new ModelAndView("/vendas/list", model);
     }
 
