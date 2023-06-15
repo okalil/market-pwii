@@ -5,7 +5,7 @@
 <head th:replace="fragments/head :: head(~{::title})">
     <title>Cadastro de Pessoa Jurídica</title>
 </head>
-<main>
+<main class="container">
     <h1>Cadastrar Pessoa Jurídica</h1>
     <form th:action="@{/pj/cadastrar}" th:object="${pessoaJuridica}" method="post">
         <div class="row mb-4">
@@ -20,6 +20,25 @@
                 <label class="form-label">CNPJ</label>
                 <input th:class="form-control" th:errorclass="is-invalid" pattern="\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}" th:field="*{cnpj}">
                 <em class="invalid-feedback" th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></em>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label class="form-label" for="usuario">Nome de usuário</label>
+                <input class="form-control" th:errorclass="is-invalid"
+                       id="usuario"
+                       th:field="*{usuario.usuario}">
+                <em id="u" class="invalid-feedback" th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"></em>
+                <em id="uu" class="invalid-feedback" th:if="${#fields.hasErrors('usuario.usuario')}" th:errors="*{usuario.usuario}"></em>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" for="senha">Senha</label>
+                <input class="form-control" th:errorclass="is-invalid" id="senha"
+                       th:field="*{usuario.senha}" type="password">
+                <em class="invalid-feedback" th:if="${#fields.hasErrors('usuario.senha')}"
+                    th:errors="*{usuario.senha}"></em>
             </div>
         </div>
 
