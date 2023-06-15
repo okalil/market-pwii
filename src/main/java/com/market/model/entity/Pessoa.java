@@ -22,6 +22,17 @@ public abstract class Pessoa {
     @OneToMany(mappedBy = "comprador")
     List<Venda> compras;
 
+    @OneToOne
+    Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     @Valid
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.PERSIST)
     List<Endereco> enderecos;
