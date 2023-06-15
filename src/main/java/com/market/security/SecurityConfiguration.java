@@ -25,8 +25,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/pf/cadastrar", "/pj/cadastrar").permitAll()
-                        .requestMatchers( "/pf/cadastrar", "/pj/cadastrar").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pf/cadastrar", "/pj/cadastrar", "/carrinho/**").permitAll()
+                        .requestMatchers("/pf/cadastrar", "/pj/cadastrar", "/carrinho/**").permitAll()
+                        .requestMatchers("/pf", "/pj", "/produtos").hasRole("ADMIN")
                         .anyRequest() //define que a configuração é válida para qualquer requisição.
                         .authenticated() //define que o usuário precisa estar autenticado.
                         .and()

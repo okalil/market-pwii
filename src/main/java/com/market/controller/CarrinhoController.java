@@ -9,11 +9,15 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Scope("request")
 @Transactional
@@ -38,6 +42,15 @@ public class CarrinhoController {
 
     @GetMapping
     public String carrinho(ModelMap model) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            model.addAttribute("authenticated", true);
+            model.addAttribute("usuario", authentication.getName());
+        }
+        List<Role> roles = (List<Role>) authentication.getAuthorities();
+        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+
         model.addAttribute("venda", venda);
         model.addAttribute("pessoas", pessoaRepository.todos());
 
@@ -65,6 +78,15 @@ public class CarrinhoController {
 
     @GetMapping("finalizar")
     public String mostrarFinalizar(ModelMap model) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            model.addAttribute("authenticated", true);
+            model.addAttribute("usuario", authentication.getName());
+        }
+        List<Role> roles = (List<Role>) authentication.getAuthorities();
+        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+
         Pessoa comprador = venda.getComprador();
 
         if(comprador == null) return "redirect:/carrinho";

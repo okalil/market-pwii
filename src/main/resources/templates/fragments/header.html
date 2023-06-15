@@ -1,8 +1,9 @@
-
 <header class="container" th:fragment="header">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -10,11 +11,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li th:if="${isAdmin}" class="nav-item">
                         <a class="nav-link" href="/produtos">Gerenciar Produtos</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li th:if="${isAdmin}" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             Clientes
                         </a>
                         <ul class="dropdown-menu">
@@ -26,6 +28,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/carrinho">Carrinho</a>
+                    </li>
+
+                    <li th:if="${authenticated == null}" class="nav-item">
+                        <form action="/login">
+                            <button class="btn btn-primary">Entrar</button>
+                        </form>
                     </li>
                 </ul>
 

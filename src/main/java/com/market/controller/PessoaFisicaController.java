@@ -9,7 +9,10 @@ import com.market.model.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RequestMapping("/pf")
 @Controller
@@ -38,6 +42,15 @@ public class PessoaFisicaController {
 
     @GetMapping
     public String listar(ModelMap model, @RequestParam(value = "nome", required = false) String nome) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            model.addAttribute("authenticated", true);
+            model.addAttribute("usuario", authentication.getName());
+        }
+        List<Role> roles = (List<Role>) authentication.getAuthorities();
+        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+
         if (nome == null || nome.isEmpty())
             model.addAttribute("pessoas", pessoaFisicaRepository.todos());
         else
@@ -47,22 +60,32 @@ public class PessoaFisicaController {
     }
 
     @GetMapping("/cadastrar")
-    public String fisica(PessoaFisica pessoaFisica) {
+    public String fisica(PessoaFisica pessoaFisica, ModelMap model) {
+
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            model.addAttribute("authenticated", true);
+            model.addAttribute("usuario", authentication.getName());
+        }
+        List<Role> roles = (List<Role>) authentication.getAuthorities();
+        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+
         return "/pf/form";
     }
 
     @Transactional
     @PostMapping("/cadastrar")
-    public String cadastrar(@Valid PessoaFisica pessoaFisica, BindingResult result) {
+    public String cadastrar(@Valid PessoaFisica pessoaFisica, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
-            return fisica(pessoaFisica);
+            return fisica(pessoaFisica, model);
         }
         ;
 
 
         if (usuarioRepository.usuario(pessoaFisica.getUsuario().getUsuario()) != null) {
             result.rejectValue("usuario.usuario", "usuario.usuario", "Nome de usuário já usado!");
-            return fisica(pessoaFisica);
+            return fisica(pessoaFisica, model);
         }
 
         Role role = roleRepository.findByName("USER");
