@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -35,8 +36,9 @@ public class SecurityConfiguration {
                         .loginPage("/login").defaultSuccessUrl("/", true) // passamos como parâmetro a URL para acesso à página de login que criamos
                         .permitAll() //define que essa página pode ser acessada por todos, independentemente do usuário estar autenticado ou não.
                         .and()
-                        .logout() //para logout
-                        .permitAll();
+                        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login").deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

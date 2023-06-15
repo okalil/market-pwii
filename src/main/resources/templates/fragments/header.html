@@ -35,6 +35,11 @@
                             <button class="btn btn-primary">Entrar</button>
                         </form>
                     </li>
+                    <li th:if="${authenticated == true}" class="nav-item">
+                        <form method="post" th:action="@{/logout}">
+                            <button class="btn btn-danger">Sair</button>
+                        </form>
+                    </li>
                 </ul>
 
                 <form class="d-flex" role="search">
