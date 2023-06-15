@@ -37,14 +37,6 @@
     <h3 th:text="|Total: ${venda.total}|"></h3>
 
     <form method="post" th:action="@{/carrinho}" class="d-flex gap-2">
-        <select class="form-select" name="id">
-            <option
-                    th:each="pessoa : ${pessoas}"
-                    th:text="${pessoa.nome}"
-                    th:value="${pessoa.id}">
-            </option>
-        </select>
-
         <div th:if="${erro != null}">
             <div class="alert alert-danger" th:text="${erro}"></div>
         </div>

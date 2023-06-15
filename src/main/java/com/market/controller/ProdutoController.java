@@ -32,10 +32,11 @@ public class ProdutoController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
-
         model.addAttribute("produtos", repository.todos());
         return new ModelAndView("/produtos/index", model);
     }

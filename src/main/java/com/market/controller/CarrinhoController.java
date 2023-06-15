@@ -1,10 +1,7 @@
 package com.market.controller;
 
 import com.market.model.entity.*;
-import com.market.model.repository.EnderecoRepository;
-import com.market.model.repository.PessoaJuridicaRepository;
-import com.market.model.repository.ProdutoRepository;
-import com.market.model.repository.VendaRepository;
+import com.market.model.repository.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +29,16 @@ public class CarrinhoController {
     ProdutoRepository produtoRepository;
 
     @Autowired
-    PessoaJuridicaRepository pessoaRepository;
+    PessoaRepository pessoaRepository;
 
     @Autowired
     EnderecoRepository enderecoRepository;
 
     @Autowired
     Venda venda;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping
     public String carrinho(ModelMap model) {
@@ -47,25 +47,24 @@ public class CarrinhoController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
-
         model.addAttribute("venda", venda);
-        model.addAttribute("pessoas", pessoaRepository.todos());
+        model.addAttribute("pessoas", pessoaRepository.findAll());
 
         return "/carrinho";
     }
 
     @PostMapping
-    public String continuar(Long id, ModelMap model) {
-        if(venda.getItens().size() < 1) {
+    public String continuar(ModelMap model) {
+
+        if (venda.getItens().size() < 1) {
             model.addAttribute("erro", "Adicione pelo menos um item ao carrinho!");
             return carrinho(model);
         }
-
-        Pessoa pessoa = pessoaRepository.buscarUm(id);
-        venda.setComprador(pessoa);
 
         return "redirect:/carrinho/finalizar";
     }
@@ -78,18 +77,24 @@ public class CarrinhoController {
 
     @GetMapping("finalizar")
     public String mostrarFinalizar(ModelMap model) {
+        if (venda.getItens().size() < 1) {
+            return "redirect:/carrinho";
+        }
+
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
 
-        Pessoa comprador = venda.getComprador();
-
-        if(comprador == null) return "redirect:/carrinho";
+        String username = authentication.getName();
+        Pessoa comprador = pessoaRepository.findByUsuario(username);
+        venda.setComprador(comprador);
 
         model.addAttribute("venda", venda);
         model.addAttribute("enderecos", enderecoRepository.todosPorPessoa(comprador.getId()));
@@ -99,26 +104,26 @@ public class CarrinhoController {
 
     @PostMapping("finalizar")
     public String finalizar(Integer enderecoId, HttpSession session, ModelMap model) {
-        if(venda.getItens().size() < 1) {
+        if (venda.getItens().size() < 1) {
             model.addAttribute("erro", "Adicione pelo menos um item ao carrinho!");
             return carrinho(model);
         }
 
-        if(enderecoId == null) {
+        if (enderecoId == null) {
             model.addAttribute("erro", "Selecione um endereço!");
             return mostrarFinalizar(model);
         }
 
         Endereco endereco = enderecoRepository.buscarUm(enderecoId);
 
-        if(endereco == null) {
+        if (endereco == null) {
             model.addAttribute("erro", "Selecione um endereço válido!");
             return mostrarFinalizar(model);
         }
 
         venda.setEndereco(endereco);
         vendaRepository.criar(venda);
-        session.invalidate();
+        session.removeAttribute("venda");
 
         return "redirect:/vendas";
     }

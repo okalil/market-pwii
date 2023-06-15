@@ -47,10 +47,11 @@ public class PessoaFisicaController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
-
         if (nome == null || nome.isEmpty())
             model.addAttribute("pessoas", pessoaFisicaRepository.todos());
         else
@@ -63,14 +64,14 @@ public class PessoaFisicaController {
     public String fisica(PessoaFisica pessoaFisica, ModelMap model) {
 
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
-
         return "/pf/form";
     }
 

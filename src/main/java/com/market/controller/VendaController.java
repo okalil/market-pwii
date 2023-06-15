@@ -38,10 +38,11 @@ public class VendaController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
-
         if (data == null)
             model.addAttribute("vendas", vendaRepository.todos());
         else
@@ -56,10 +57,11 @@ public class VendaController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("authenticated", true);
             model.addAttribute("usuario", authentication.getName());
+            List<Role> roles = (List<Role>) authentication.getAuthorities();
+            model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
+        } else {
+            model.addAttribute("isAdmin", false);
         }
-        List<Role> roles = (List<Role>) authentication.getAuthorities();
-        model.addAttribute("isAdmin", roles.stream().filter(it -> "ADMIN".equals(it.getNome())).findFirst().orElse(null));
-
         model.addAttribute("venda", vendaRepository.buscarUm(vendaId));
         return new ModelAndView("/vendas/details", model);
     }

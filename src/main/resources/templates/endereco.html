@@ -10,21 +10,26 @@
 
     <h3 th:text="|Total: ${venda.total}|"></h3>
 
-    <form method="post">
-        <label th:each="endereco, iteracao : ${enderecos}">
-            <input type="radio" th:name="enderecoId" th:value="${endereco.id}"/>
-            <h4 th:text="|Endereço ${iteracao.index + 1}|"></h4>
-            <p th:text="|CEP: ${endereco.cep}|"></p>
-            <p th:text="|Estado: ${endereco.cidade.estado.nome}|"></p>
-            <p th:text="|Cidade: ${endereco.cidade.nome}|"></p>
-            <p th:text="|Logradouro: ${endereco.logradouro}|"></p>
-            <p th:text="|Bairro: ${endereco.bairro}|"></p>
-        </label>
-
-        <div th:if="${erro != null}">
-            <div class="alert alert-danger" th:text="${erro}"></div>
+    <form method="post" th:action="@{/carrinho/finalizar}">
+        <div class="d-flex mb-3" style="gap: 20px;">
+            <label class="p-3 border rounded d-flex align-items-baseline" style="gap: 20px;"
+                   th:each="endereco, iteracao : ${enderecos}">
+                <input type="radio" th:name="enderecoId" th:value="${endereco.id}"/>
+                <div>
+                    <h4 th:text="|Endereço ${iteracao.index + 1}|"></h4>
+                    <p th:text="|CEP: ${endereco.cep}|"></p>
+                    <p th:text="|Estado: ${endereco.cidade.estado.nome}|"></p>
+                    <p th:text="|Cidade: ${endereco.cidade.nome}|"></p>
+                    <p th:text="|Logradouro: ${endereco.logradouro}|"></p>
+                    <p th:text="|Bairro: ${endereco.bairro}|"></p>
+                </div>
+            </label>
         </div>
 
-        <button>Finalizar</button>
+        <div th:if="${erro != null}">
+            <div class="alert alert-danger mb-3" th:text="${erro}"></div>
+        </div>
+
+        <button class="btn btn-primary">Finalizar</button>
     </form>
 </main>
