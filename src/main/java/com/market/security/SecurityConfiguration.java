@@ -25,7 +25,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/pf/save").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/pf/cadastrar", "/pj/cadastrar").permitAll()
+                        .requestMatchers( "/pf/cadastrar", "/pj/cadastrar").permitAll()
                         .anyRequest() //define que a configuração é válida para qualquer requisição.
                         .authenticated() //define que o usuário precisa estar autenticado.
                         .and()

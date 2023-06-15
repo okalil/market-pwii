@@ -6,7 +6,7 @@
             <label class="form-label" for="cep">CEP</label>
             <input th:class="form-control" th:errorclass="is-invalid" id="cep" th:field="*{enderecos[0].cep}"
                    maxlength="8"/>
-            <em th:if="${#fields.hasErrors('enderecos[0].cep')}" th:errors="*{enderecos[0].cep}"></em>
+            <em class="invalid-feedback" th:if="${#fields.hasErrors('enderecos[0].cep')}" th:errors="*{enderecos[0].cep}"></em>
         </div>
 
         <div class="col-md-4">

@@ -18,10 +18,10 @@ public class Usuario implements Serializable, UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    @NotEmpty
-    @NotBlank
+    @NotBlank(message = "Nome de usuário é obrigatório")
     private String usuario;
-    @NotBlank
+
+    @NotBlank(message = "Senha é obrigatório")
     private String senha;
     @ManyToMany
     private List<Role> roles = new ArrayList<>();

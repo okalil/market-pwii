@@ -22,7 +22,8 @@ public abstract class Pessoa {
     @OneToMany(mappedBy = "comprador")
     List<Venda> compras;
 
-    @OneToOne
+    @Valid
+    @OneToOne(cascade = CascadeType.PERSIST)
     Usuario usuario;
 
     public Usuario getUsuario() {

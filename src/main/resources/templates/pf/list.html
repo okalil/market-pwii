@@ -30,11 +30,13 @@
         <thead>
         <th>ID</th>
         <th>NOME</th>
+        <th>USUÁRIO</th>
         </thead>
         <tbody>
         <tr th:each="pessoa : ${pessoas}">
             <td th:text="${pessoa.id}"></td>
             <td th:text="${pessoa.nome}"></td>
+            <td th:text="${pessoa.usuario.usuario}"></td>
         </tr>
         </tbody>
     </table>

@@ -24,6 +24,25 @@
             </div>
         </div>
 
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label class="form-label" for="usuario">Nome de usuário</label>
+                <input class="form-control" th:errorclass="is-invalid"
+                       id="usuario"
+                       th:field="*{usuario.usuario}">
+                <em id="u" class="invalid-feedback" th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"></em>
+                <em id="uu" class="invalid-feedback" th:if="${#fields.hasErrors('usuario.usuario')}" th:errors="*{usuario.usuario}"></em>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label" for="senha">Senha</label>
+                <input class="form-control" th:errorclass="is-invalid" id="senha"
+                       th:field="*{usuario.senha}" type="password">
+                <em class="invalid-feedback" th:if="${#fields.hasErrors('usuario.senha')}"
+                    th:errors="*{usuario.senha}"></em>
+            </div>
+        </div>
+
         <div th:replace="fragments/address.html"></div>
 
         <button class="btn btn-primary mt-4">Enviar</button>
